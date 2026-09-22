@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Page</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Fondo principal apuntando al archivo local 'bg.jpg' */
+    .bg-custom {
+      background-image: url('bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+  </style>
+</head>
+<body class="bg-custom bg-slate-900 min-h-screen w-full flex items-center justify-center m-0 p-4 select-none relative overflow-hidden">
+
+  <div class="absolute inset-0 bg-black/45 backdrop-blur-[2px] pointer-events-none"></div>
+
+  <main class="relative z-10 w-full max-w-md mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 p-6">
+    
+    <!-- Botón 1: AGENDA -->
+    <button
+      type="button"
+      id="btn-agenda"
+      class="w-full sm:w-48 py-3.5 px-6 rounded-xl font-bold tracking-wider text-sm uppercase text-white bg-white/10 hover:bg-white/20 active:scale-95 border border-white/30 hover:border-white/60 shadow-lg hover:shadow-white/10 backdrop-blur-md transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-white/50"
+    >
+      Agenda
+    </button>
+
+    <!-- Botón 2: TOUR -->
+    <button
+      type="button"
+      id="btn-tour"
+      class="w-full sm:w-48 py-3.5 px-6 rounded-xl font-bold tracking-wider text-sm uppercase text-slate-900 bg-white hover:bg-slate-100 active:scale-95 shadow-xl hover:shadow-2xl hover:shadow-white/20 transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-white/80"
+    >
+      Tour
+    </button>
+
+  </main>
+
+  <div
+    id="toast-notification"
+    class="fixed bottom-6 px-4 py-2 rounded-lg bg-black/80 text-white text-xs font-medium tracking-wide backdrop-blur-md border border-white/10 opacity-0 translate-y-3 pointer-events-none transition-all duration-300 ease-out z-20"
+  >
+    <!-- El texto se asigna dinámicamente -->
+  </div>
+
+  <script>
+    // Pequeño feedback visual al hacer clic sin interferir con futuras funcionalidades
+    const toast = document.getElementById('toast-notification');
+    let toastTimeout;
+
+    function showFeedback(text) {
+      clearTimeout(toastTimeout);
+      toast.textContent = text;
+      toast.classList.remove('opacity-0', 'translate-y-3');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', 'translate-y-3');
+      }, 1800);
+    }
+
+    document.getElementById('btn-agenda').addEventListener('click', () => {
+      showFeedback('Opción seleccionada: AGENDA');
+    });
+
+    document.getElementById('btn-tour').addEventListener('click', () => {
+      showFeedback('Opción seleccionada: TOUR');
+    });
+  </script>
+</body>
+</html>
