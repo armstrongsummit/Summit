@@ -10,9 +10,20 @@
     :root{
       --text:#ffffff;
       --orange:#ff7a00;
-      --orange-glow: rgba(255,122,0,.28);
+      --orange-soft:rgba(255,122,0,.22);
+      --orange-glow:rgba(255,122,0,.25);
+
+      --lime:#bfd200;
+      --lime-soft:rgba(191,210,0,.22);
+      --lime-glow:rgba(191,210,0,.20);
+
       --blue:#00b9ff;
-      --blue-glow: rgba(0,185,255,.26);
+      --blue-soft:rgba(0,185,255,.20);
+      --blue-glow:rgba(0,185,255,.22);
+
+      --pink:#d5007f;
+      --pink-soft:rgba(213,0,127,.18);
+      --pink-glow:rgba(213,0,127,.18);
     }
 
     *{ box-sizing:border-box; }
@@ -28,7 +39,7 @@
       min-height:100vh;
       min-height:100dvh;
       background:
-        linear-gradient(rgba(3,7,14,.18), rgba(3,7,14,.52)),
+        linear-gradient(rgba(4,9,18,.20), rgba(4,9,18,.54)),
         url("bg.jpg") center center / cover no-repeat;
       overflow-x:hidden;
     }
@@ -44,7 +55,6 @@
       isolation:isolate;
     }
 
-
     .layout{
       width:min(100%, 1080px);
       min-height:calc(100vh - max(18px, env(safe-area-inset-top)) - max(24px, env(safe-area-inset-bottom)));
@@ -58,7 +68,7 @@
     .top{
       display:flex;
       justify-content:center;
-      padding-top:14px;
+      padding-top:8px;
     }
 
     .logo-armstrong{
@@ -74,68 +84,87 @@
       flex-direction:column;
       align-items:center;
       justify-content:center;
-      gap:34px;
-      padding:18px 0 28px;
+      gap:26px;
+      padding:12px 0 28px;
+      transform:translateY(-28px);
     }
 
     .farma-title{
       width:min(480px, 68vw);
       max-width:100%;
       height:auto;
+      margin:65px auto;
       display:block;
       filter: drop-shadow(0 8px 20px rgba(0,0,0,.30));
     }
 
-    .buttons{
+    .button-area{
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:18px;
+    }
+
+    .row{
+      width:100%;
       display:flex;
       justify-content:center;
       align-items:center;
-      gap:22px;
+      gap:26px;
       flex-wrap:wrap;
-      width:100%;
     }
 
     .btn{
-      min-width:188px;
-      min-height:54px;
-      padding:14px 28px;
-      border-radius:10px;
+      min-width:220px;
+      min-height:62px;
+      padding:14px 26px;
+      border-radius:12px;
       display:inline-flex;
       align-items:center;
       justify-content:center;
+      text-align:center;
       text-decoration:none;
-      text-transform:uppercase;
       font-weight:800;
-      letter-spacing:.03em;
-      font-size:16px;
+      line-height:1.05;
+      font-size:17px;
       color:#fff;
-      background:rgba(16,22,32,.18);
-      backdrop-filter: blur(1.5px);
-      -webkit-backdrop-filter: blur(1.5px);
+      background:rgba(15,21,31,.18);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
       transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+      box-shadow: 0 10px 24px rgba(0,0,0,.16);
     }
 
-    .btn:hover{
-      transform:translateY(-2px);
-    }
-
-    .btn:active{
-      transform:scale(.98);
-    }
-
+    .btn:hover{ transform:translateY(-2px); }
+    .btn:active{ transform:scale(.98); }
     .btn:focus-visible{
       outline:3px solid rgba(255,255,255,.88);
       outline-offset:3px;
     }
 
-    .btn-agenda{
-      border:1.6px solid var(--orange);
-      box-shadow:0 0 0 1px rgba(255,122,0,.10) inset, 0 0 18px var(--orange-glow);
+    .btn-general{
+      border:1.6px solid var(--lime);
+      background: linear-gradient(180deg, var(--lime-soft), rgba(15,21,31,.20));
+      box-shadow:0 0 0 1px rgba(191,210,0,.12) inset, 0 0 20px var(--lime-glow);
     }
 
-    .btn-tour{
+    .btn-11{
+      border:1.6px solid var(--orange);
+      background: linear-gradient(180deg, var(--orange-soft), rgba(15,21,31,.20));
+      box-shadow:0 0 0 1px rgba(255,122,0,.12) inset, 0 0 20px var(--orange-glow);
+    }
+
+    .btn-12{
       border:1.6px solid var(--blue);
-      box-shadow:0 0 0 1px rgba(0,185,255,.10) inset, 0 0 18px var(--blue-glow);
+      background: linear-gradient(180deg, var(--blue-soft), rgba(15,21,31,.20));
+      box-shadow:0 0 0 1px rgba(0,185,255,.12) inset, 0 0 20px var(--blue-glow);
+    }
+
+    .btn-13{
+      border:1.6px solid var(--pink);
+      background: linear-gradient(180deg, var(--pink-soft), rgba(15,21,31,.20));
+      box-shadow:0 0 0 1px rgba(213,0,127,.12) inset, 0 0 20px var(--pink-glow);
     }
 
     .bottom{
@@ -145,6 +174,7 @@
       justify-content:flex-end;
       gap:18px;
       padding-bottom:10px;
+      transform:translateY(-48px);
     }
 
     .logo-summit{
@@ -163,60 +193,62 @@
       filter: drop-shadow(0 8px 16px rgba(0,0,0,.30));
     }
 
-    /* Tablet */
     @media (max-width: 900px){
       .logo-armstrong{ width:min(300px, 48vw); }
       .farma-title{ width:min(420px, 74vw); }
       .logo-summit{ width:min(320px, 64vw); }
       .logo-specialties{ width:min(410px, 78vw); }
+      .row{ gap:18px; }
+      .btn{ min-width:200px; }
     }
 
-    /* Mobile */
     @media (max-width: 640px){
       .page{
         padding-left:18px;
         padding-right:18px;
       }
 
-      .layout{
-        grid-template-rows:auto 1fr auto;
-      }
-
-      .top{
-        padding-top:6px;
-      }
+      .top{ padding-top:4px; }
 
       .logo-armstrong{
-        width:min(250px, 66vw);
+        width:min(248px, 66vw);
       }
 
       .middle{
-        gap:28px;
+        gap:22px;
         padding:10px 0 18px;
+        transform:translateY(-52px);
       }
 
       .farma-title{
         width:min(320px, 84vw);
       }
 
-      .buttons{
-        flex-direction:column;
+      .button-area{
         gap:14px;
+      }
+
+      .row{
+        flex-direction:column;
+        gap:12px;
       }
 
       .btn{
         width:min(100%, 270px);
         min-width:0;
-        min-height:52px;
+        min-height:54px;
+        font-size:15px;
+        padding:12px 18px;
       }
 
       .bottom{
         gap:16px;
         padding-bottom:4px;
+        transform:translateY(-78px);
       }
 
       .logo-summit{
-        width:min(290px, 80vw);
+        width:min(290px, 86vw);
       }
 
       .logo-specialties{
@@ -234,8 +266,6 @@
 </head>
 <body>
   <main class="page">
- 
-
     <section class="layout">
       <header class="top">
         <img class="logo-armstrong" src="logo_armstrong.png" alt="Armstrong">
@@ -244,14 +274,21 @@
       <section class="middle">
         <img class="farma-title" src="farma.png" alt="2° Summit Farma B">
 
-        <nav class="buttons" aria-label="Documentos del evento">
-          <a class="btn btn-agenda" href="agenda.pdf" target="_blank" rel="noopener">Agenda</a>
-          <a class="btn btn-tour" href="tour.pdf" target="_blank" rel="noopener">Tour</a>
-        </nav>
+        <div class="button-area" aria-label="Documentos del evento">
+          <div class="row">
+            <a class="btn btn-general" href="agenda.pdf" target="_blank" rel="noopener">Agenda General</a>
+          </div>
+
+          <div class="row">
+            <a class="btn btn-11" href="agenda-11-octubre.pdf" target="_blank" rel="noopener">11 Octubre</a>
+            <a class="btn btn-12" href="agenda-12-octubre.pdf" target="_blank" rel="noopener">12 Octubre</a>
+            <a class="btn btn-13" href="tour.pdf" target="_blank" rel="noopener">13 Octubre:<br>Excursión</a>
+          </div>
+        </div>
       </section>
 
       <footer class="bottom">
-        <img class="logo-summit" src="letras_summit.png" alt="Summit Especialidades">
+        <img class="logo-summit" src="Letras_Summit.png" alt="Summit Especialidades">
         <img class="logo-specialties" src="logos_especialidades.png" alt="Especialidades del summit">
       </footer>
     </section>
