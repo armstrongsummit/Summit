@@ -2,89 +2,281 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Landing Page</title>
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Google Fonts: Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090d18">
+  <title>Summit Especialidades 2026</title>
 
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
+    :root{
+      --text:#ffffff;
+      --orange:#ff7a00;
+      --orange-glow: rgba(255,122,0,.28);
+      --blue:#00b9ff;
+      --blue-glow: rgba(0,185,255,.26);
     }
 
-    /* Fondo principal apuntando al archivo local 'bg.jpg' */
-    .bg-custom {
-      background-image: url('bg.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
+    *{ box-sizing:border-box; }
+
+    html, body{
+      margin:0;
+      min-height:100%;
+      font-family: Arial, Helvetica, sans-serif;
+      color:var(--text);
+    }
+
+    body{
+      min-height:100vh;
+      min-height:100dvh;
+      background:
+        linear-gradient(rgba(3,7,14,.18), rgba(3,7,14,.52)),
+        url("bg.jpg") center center / cover no-repeat;
+      overflow-x:hidden;
+    }
+
+    .page{
+      position:relative;
+      min-height:100vh;
+      min-height:100dvh;
+      padding:
+        max(18px, env(safe-area-inset-top))
+        22px
+        max(24px, env(safe-area-inset-bottom));
+      isolation:isolate;
+    }
+
+    .color-layer{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      opacity:.88;
+      mix-blend-mode:screen;
+      pointer-events:none;
+      z-index:-2;
+    }
+
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(circle at center, rgba(0,0,0,.04), rgba(0,0,0,.32)),
+        linear-gradient(rgba(5,11,19,.08), rgba(5,11,19,.22));
+      z-index:-1;
+      pointer-events:none;
+    }
+
+    .layout{
+      width:min(100%, 1080px);
+      min-height:calc(100vh - max(18px, env(safe-area-inset-top)) - max(24px, env(safe-area-inset-bottom)));
+      min-height:calc(100dvh - max(18px, env(safe-area-inset-top)) - max(24px, env(safe-area-inset-bottom)));
+      margin:0 auto;
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      align-items:center;
+    }
+
+    .top{
+      display:flex;
+      justify-content:center;
+      padding-top:14px;
+    }
+
+    .logo-armstrong{
+      width:min(350px, 40vw);
+      max-width:100%;
+      height:auto;
+      display:block;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,.28));
+    }
+
+    .middle{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:34px;
+      padding:18px 0 28px;
+    }
+
+    .farma-title{
+      width:min(480px, 68vw);
+      max-width:100%;
+      height:auto;
+      display:block;
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,.30));
+    }
+
+    .buttons{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:22px;
+      flex-wrap:wrap;
+      width:100%;
+    }
+
+    .btn{
+      min-width:188px;
+      min-height:54px;
+      padding:14px 28px;
+      border-radius:10px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      text-transform:uppercase;
+      font-weight:800;
+      letter-spacing:.03em;
+      font-size:16px;
+      color:#fff;
+      background:rgba(16,22,32,.18);
+      backdrop-filter: blur(1.5px);
+      -webkit-backdrop-filter: blur(1.5px);
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .btn:active{
+      transform:scale(.98);
+    }
+
+    .btn:focus-visible{
+      outline:3px solid rgba(255,255,255,.88);
+      outline-offset:3px;
+    }
+
+    .btn-agenda{
+      border:1.6px solid var(--orange);
+      box-shadow:0 0 0 1px rgba(255,122,0,.10) inset, 0 0 18px var(--orange-glow);
+    }
+
+    .btn-tour{
+      border:1.6px solid var(--blue);
+      box-shadow:0 0 0 1px rgba(0,185,255,.10) inset, 0 0 18px var(--blue-glow);
+    }
+
+    .bottom{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-end;
+      gap:18px;
+      padding-bottom:10px;
+    }
+
+    .logo-summit{
+      width:min(370px, 40vw);
+      max-width:100%;
+      height:auto;
+      display:block;
+      filter: drop-shadow(0 10px 22px rgba(0,0,0,.34));
+    }
+
+    .logo-specialties{
+      width:min(470px, 52vw);
+      max-width:100%;
+      height:auto;
+      display:block;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,.30));
+    }
+
+    /* Tablet */
+    @media (max-width: 900px){
+      .logo-armstrong{ width:min(300px, 48vw); }
+      .farma-title{ width:min(420px, 74vw); }
+      .logo-summit{ width:min(320px, 64vw); }
+      .logo-specialties{ width:min(410px, 78vw); }
+    }
+
+    /* Mobile */
+    @media (max-width: 640px){
+      .page{
+        padding-left:18px;
+        padding-right:18px;
+      }
+
+      .layout{
+        grid-template-rows:auto 1fr auto;
+      }
+
+      .top{
+        padding-top:6px;
+      }
+
+      .logo-armstrong{
+        width:min(250px, 66vw);
+      }
+
+      .middle{
+        gap:28px;
+        padding:10px 0 18px;
+      }
+
+      .farma-title{
+        width:min(320px, 84vw);
+      }
+
+      .buttons{
+        flex-direction:column;
+        gap:14px;
+      }
+
+      .btn{
+        width:min(100%, 270px);
+        min-width:0;
+        min-height:52px;
+      }
+
+      .bottom{
+        gap:16px;
+        padding-bottom:4px;
+      }
+
+      .logo-summit{
+        width:min(290px, 80vw);
+      }
+
+      .logo-specialties{
+        width:min(310px, 88vw);
+      }
+    }
+
+    @media (max-width: 390px){
+      .logo-armstrong{ width:min(225px, 70vw); }
+      .farma-title{ width:min(300px, 88vw); }
+      .logo-summit{ width:min(280px, 88vw); }
+      .logo-specialties{ width:min(295px, 92vw); }
     }
   </style>
 </head>
-<body class="bg-custom bg-slate-900 min-h-screen w-full flex items-center justify-center m-0 p-4 select-none relative overflow-hidden">
+<body>
+  <main class="page">
+    <img class="color-layer" src="layer_colores.png" alt="" aria-hidden="true">
+    <div class="overlay" aria-hidden="true"></div>
 
-  <div class="absolute inset-0 bg-black/45 backdrop-blur-[2px] pointer-events-none"></div>
+    <section class="layout">
+      <header class="top">
+        <img class="logo-armstrong" src="Logo_Armstrong.png" alt="Armstrong">
+      </header>
 
-  <main class="relative z-10 w-full max-w-md mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 p-6">
-    
-    <!-- Botón 1: AGENDA -->
-    <button
-      type="button"
-      id="btn-agenda"
-      class="w-full sm:w-48 py-3.5 px-6 rounded-xl font-bold tracking-wider text-sm uppercase text-white bg-white/10 hover:bg-white/20 active:scale-95 border border-white/30 hover:border-white/60 shadow-lg hover:shadow-white/10 backdrop-blur-md transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-white/50"
-    >
-      Agenda
-    </button>
+      <section class="middle">
+        <img class="farma-title" src="Farma.png" alt="2° Summit Farma B">
 
-    <!-- Botón 2: TOUR -->
-    <button
-      type="button"
-      id="btn-tour"
-      class="w-full sm:w-48 py-3.5 px-6 rounded-xl font-bold tracking-wider text-sm uppercase text-slate-900 bg-white hover:bg-slate-100 active:scale-95 shadow-xl hover:shadow-2xl hover:shadow-white/20 transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-white/80"
-    >
-      Tour
-    </button>
+        <nav class="buttons" aria-label="Documentos del evento">
+          <a class="btn btn-agenda" href="agenda.pdf" target="_blank" rel="noopener">Agenda</a>
+          <a class="btn btn-tour" href="tour.pdf" target="_blank" rel="noopener">Tour</a>
+        </nav>
+      </section>
 
+      <footer class="bottom">
+        <img class="logo-summit" src="Letras_Summir.png" alt="Summit Especialidades">
+        <img class="logo-specialties" src="logos_Especialidades.png" alt="Especialidades del summit">
+      </footer>
+    </section>
   </main>
-
-  <div
-    id="toast-notification"
-    class="fixed bottom-6 px-4 py-2 rounded-lg bg-black/80 text-white text-xs font-medium tracking-wide backdrop-blur-md border border-white/10 opacity-0 translate-y-3 pointer-events-none transition-all duration-300 ease-out z-20"
-  >
-    <!-- El texto se asigna dinámicamente -->
-  </div>
-
-  <script>
-    // Pequeño feedback visual al hacer clic sin interferir con futuras funcionalidades
-    const toast = document.getElementById('toast-notification');
-    let toastTimeout;
-
-    function showFeedback(text) {
-      clearTimeout(toastTimeout);
-      toast.textContent = text;
-      toast.classList.remove('opacity-0', 'translate-y-3');
-      toast.classList.add('opacity-100', 'translate-y-0');
-
-      toastTimeout = setTimeout(() => {
-        toast.classList.remove('opacity-100', 'translate-y-0');
-        toast.classList.add('opacity-0', 'translate-y-3');
-      }, 1800);
-    }
-
-    document.getElementById('btn-agenda').addEventListener('click', () => {
-      showFeedback('Opción seleccionada: AGENDA');
-    });
-
-    document.getElementById('btn-tour').addEventListener('click', () => {
-      showFeedback('Opción seleccionada: TOUR');
-    });
-  </script>
 </body>
 </html>
