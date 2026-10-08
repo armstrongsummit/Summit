@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090d18">
+  <title>Summit Especialidades 2026</title>
+  <style>
+    :root{
+      --text:#ffffff;
+      --orange:#ff7a00;
+      --orange-soft:rgba(255,122,0,.22);
+      --orange-glow:rgba(255,122,0,.25);
+      --lime:#bfd200;
+      --lime-soft:rgba(191,210,0,.22);
+      --lime-glow:rgba(191,210,0,.20);
+      --blue:#00b9ff;
+      --blue-soft:rgba(0,185,255,.20);
+      --blue-glow:rgba(0,185,255,.22);
+      --pink:#d5007f;
+      --pink-soft:rgba(213,0,127,.18);
+      --pink-glow:rgba(213,0,127,.18);
+      --panel-bg:rgba(5, 14, 29, .88);
+      --panel-border:rgba(255,255,255,.18);
+    }
+    *{box-sizing:border-box;}
+    html,body{margin:0;min-height:100%;font-family:Arial, Helvetica, sans-serif;color:var(--text);}
+    body{
+      min-height:100vh;
+      min-height:100dvh;
+      background: linear-gradient(rgba(4,9,18,.20), rgba(4,9,18,.54)), url("bg.jpg") center center / cover no-repeat;
+      overflow-x:hidden;
+    }
+    .page{
+      position:relative;
+      min-height:100vh;
+      min-height:100dvh;
+      padding:max(18px, env(safe-area-inset-top)) 22px max(24px, env(safe-area-inset-bottom));
+      isolation:isolate;
+    }
+    .layout{
+      width:min(100%, 1080px);
+      min-height:calc(100vh - max(18px, env(safe-area-inset-top)) - max(24px, env(safe-area-inset-bottom)));
+      min-height:calc(100dvh - max(18px, env(safe-area-inset-top)) - max(24px, env(safe-area-inset-bottom)));
+      margin:0 auto;
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      align-items:center;
+      gap:10px;
+    }
+    .top{display:flex;justify-content:center;padding-top:8px;}
+    .logo-armstrong{width:min(350px, 40vw);max-width:100%;height:auto;display:block;filter:drop-shadow(0 8px 18px rgba(0,0,0,.28));}
+    .middle{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:12px 0 28px;transform:translateY(-28px);}
+    .farma-title{width:min(480px, 68vw);max-width:100%;height:auto;margin:65px auto;display:block;filter:drop-shadow(0 8px 20px rgba(0,0,0,.30));}
+    .button-area{width:100%;display:flex;flex-direction:column;align-items:center;gap:18px;}
+    .row{width:100%;display:flex;justify-content:center;align-items:center;gap:26px;flex-wrap:wrap;}
+    .btn{min-width:220px;min-height:62px;padding:14px 26px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;text-align:center;text-decoration:none;font-weight:800;line-height:1.05;font-size:17px;color:#fff;background:rgba(15,21,31,.18);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);transition:transform .18s ease, box-shadow .18s ease, background .18s ease;box-shadow:0 10px 24px rgba(0,0,0,.16);}
+    .btn:hover{transform:translateY(-2px);}
+    .btn:active{transform:scale(.98);}
+    .btn:focus-visible{outline:3px solid rgba(255,255,255,.88);outline-offset:3px;}
+    .btn-general{border:1.6px solid var(--lime);background:linear-gradient(180deg, var(--lime-soft), rgba(15,21,31,.20));box-shadow:0 0 0 1px rgba(191,210,0,.12) inset, 0 0 20px var(--lime-glow);}
+    .btn-11{border:1.6px solid var(--orange);background:linear-gradient(180deg, var(--orange-soft), rgba(15,21,31,.20));box-shadow:0 0 0 1px rgba(255,122,0,.12) inset, 0 0 20px var(--orange-glow);}
+    .btn-12{border:1.6px solid var(--blue);background:linear-gradient(180deg, var(--blue-soft), rgba(15,21,31,.20));box-shadow:0 0 0 1px rgba(0,185,255,.12) inset, 0 0 20px var(--blue-glow);}
+    .btn-13{border:1.6px solid var(--pink);background:linear-gradient(180deg, var(--pink-soft), rgba(15,21,31,.20));box-shadow:0 0 0 1px rgba(213,0,127,.12) inset, 0 0 20px var(--pink-glow);}
+    .btn-salidas{border:1.6px solid #e88fab;background:linear-gradient(180deg,rgba(232,90,139,.24),rgba(15,21,31,.2));box-shadow:0 0 20px rgba(232,90,139,.2)}
+    .hidden{display:none!important;}
+
+    .flight-panel{
+      width:min(100%, 860px);
+      background:var(--panel-bg);
+      border:1px solid var(--panel-border);
+      border-radius:22px;
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      box-shadow:0 20px 50px rgba(0,0,0,.24);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      max-height:min(72vh, 760px);
+    }
+    .flight-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px 18px 14px;border-bottom:1px solid rgba(255,255,255,.08);}
+    .flight-top h2{font-size:clamp(20px,3vw,32px);margin:0;line-height:1.1;}
+    .back-button{cursor:pointer;background:rgba(255,255,255,.10);border:1px solid #81d9ee;border-radius:13px;color:white;padding:11px 14px;font-weight:700;flex-shrink:0;}
+    .back-button:hover{background:rgba(255,255,255,.16);}
+    #flight-body{padding:16px 18px 20px;overflow:auto;}
+    .flight-note{font-size:14px;color:#d2dceb;line-height:1.5;margin:0 0 14px;}
+    .flight-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+
+    .flight-card{
+      --tone:#38bdf8;
+      --tone-soft:rgba(56,189,248,.16);
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:14px;
+      align-items:center;
+      width:100%;
+      text-align:left;
+      color:white;
+      cursor:pointer;
+      font:inherit;
+      border-radius:20px;
+      padding:14px;
+      border:2px solid var(--tone);
+      background:linear-gradient(180deg, var(--tone-soft), rgba(17,30,48,.92));
+      box-shadow:0 10px 26px rgba(0,0,0,.18);
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .flight-card:hover{transform:translateY(-2px);box-shadow:0 16px 32px rgba(0,0,0,.26);}
+    .flight-card:focus-visible,.back-button:focus-visible{outline:3px solid white;outline-offset:2px;}
+    .flight-chip{
+      min-width:92px;
+      padding:18px 14px;
+      border-radius:16px;
+      background:color-mix(in srgb, var(--tone) 88%, white 12%);
+      color:#fff;
+      font-weight:900;
+      font-size:clamp(22px, 3vw, 34px);
+      line-height:1;
+      text-align:center;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.10);
+    }
+    .flight-meta{display:flex;flex-direction:column;gap:6px;min-width:0;}
+    .flight-date{display:block;font-size:15px;color:#dfe8f5;line-height:1.3;}
+    .flight-airline{display:block;font-size:clamp(20px, 2.2vw, 28px);font-weight:900;line-height:1.1;text-transform:uppercase;letter-spacing:.2px;}
+    .flight-sub{display:block;font-size:14px;color:#e4ebf5;line-height:1.35;}
+    .tone-1{--tone:#39d1e7;--tone-soft:rgba(57,209,231,.17);}
+    .tone-2{--tone:#d54cc8;--tone-soft:rgba(213,76,200,.16);}
+    .tone-3{--tone:#f5c12a;--tone-soft:rgba(245,193,42,.18);}
+    .tone-4{--tone:#9b5de5;--tone-soft:rgba(155,93,229,.16);}
+    .tone-5{--tone:#22c55e;--tone-soft:rgba(34,197,94,.16);}
+    .tone-6{--tone:#ff8f2b;--tone-soft:rgba(255,143,43,.18);}
+
+    .flight-detail{line-height:1.55;}
+    .detail-head{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+    .detail-head h3{margin:0;font-size:clamp(22px,2.4vw,30px);line-height:1.15;}
+    .detail-meta{font-size:15px;color:#f0f6ff;}
+    .hotel-time{border:1px solid #ffb950;background:rgba(228,143,29,.14);border-radius:14px;padding:13px 14px;margin:14px 0;font-weight:700;}
+    .participants-wrap{
+      margin-top:12px;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      background:rgba(8,18,32,.35);
+      padding:14px;
+      max-height:min(42vh, 420px);
+      overflow:auto;
+    }
+    .participants-wrap h4{margin:0 0 10px;font-size:clamp(18px,2vw,24px);}
+    .participant-list{padding-left:24px;margin:0;columns:2;column-gap:28px;}
+    .participant-list li{break-inside:avoid;padding:4px 0;font-size:15px;line-height:1.45;}
+
+    .bottom{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:18px;padding-bottom:10px;transform:translateY(-48px);}
+    .logo-summit{width:min(370px, 40vw);max-width:100%;height:auto;display:block;filter:drop-shadow(0 10px 22px rgba(0,0,0,.34));}
+    .logo-specialties{width:min(470px, 52vw);max-width:100%;height:auto;display:block;filter:drop-shadow(0 8px 16px rgba(0,0,0,.30));}
+
+    .page.panel-open .layout{align-items:start;}
+    .page.panel-open .middle{justify-content:flex-start;gap:18px;padding:0 0 10px;transform:none;}
+    .page.panel-open .farma-title{margin:12px auto 0;width:min(350px, 50vw);}
+    .page.panel-open .bottom{transform:none;padding-bottom:0;gap:14px;}
+    .page.panel-open .logo-summit{width:min(280px, 32vw);}
+    .page.panel-open .logo-specialties{width:min(360px, 42vw);}
+
+    @media (max-width: 900px){
+      .logo-armstrong{width:min(300px, 48vw);}
+      .farma-title{width:min(420px, 74vw);}
+      .logo-summit{width:min(320px, 64vw);}
+      .logo-specialties{width:min(410px, 78vw);}
+      .row{gap:18px;}
+      .btn{min-width:200px;}
+      .page.panel-open .farma-title{width:min(320px, 56vw);}
+    }
+    @media (max-width: 640px){
+      .page{padding-left:12px;padding-right:12px;}
+      .top{padding-top:4px;}
+      .logo-armstrong{width:min(248px, 66vw);}
+      .middle{gap:22px;padding:10px 0 18px;transform:translateY(-52px);}
+      .farma-title{width:min(320px, 84vw);margin:44px auto 18px;}
+      .button-area{gap:14px;}
+      .row{flex-direction:column;gap:12px;}
+      .btn{width:min(100%, 300px);min-width:0;min-height:54px;font-size:15px;padding:12px 18px;}
+      .flight-panel{max-height:min(66dvh, 610px); min-height:0; border-radius:16px;}
+      .flight-top{padding:12px 13px 10px;align-items:center;}
+      #flight-body{padding:11px 12px 14px;overscroll-behavior:contain;}
+      .flight-grid{grid-template-columns:1fr;gap:9px;}
+      .flight-card{grid-template-columns:76px minmax(0,1fr);gap:11px;padding:10px;border-radius:13px;border-width:1.5px;}
+      .flight-chip{min-width:0;width:76px;padding:17px 5px;font-size:19px;border-radius:9px;}
+      .flight-airline{font-size:15px;line-height:1.18;overflow-wrap:anywhere;}
+      .flight-meta{gap:3px;}
+      .flight-date,.flight-sub{font-size:12px;line-height:1.32;}
+      .flight-note{font-size:12px;margin-bottom:10px;}
+      .participant-list{columns:1;padding-left:22px;}
+      .participants-wrap{max-height:48vh;}
+      .bottom{gap:16px;padding-bottom:4px;transform:translateY(-78px);}
+      .logo-summit{width:min(290px, 86vw);}
+      .logo-specialties{width:min(310px, 88vw);}
+      .page.panel-open .middle{padding-bottom:6px;}
+      .page.panel-open .top{padding-top:2px;}
+      .page.panel-open .logo-armstrong{width:min(210px,57vw);}
+      .page.panel-open .farma-title{width:min(270px, 74vw);margin:8px auto 0;}
+      .page.panel-open .bottom{gap:10px;}
+      .page.panel-open .logo-summit{width:min(230px, 72vw);}
+      .page.panel-open .logo-specialties{width:min(280px, 84vw);}
+    }
+    @media (max-width: 390px){
+      .logo-armstrong{width:min(225px, 70vw);}
+      .farma-title{width:min(300px, 88vw);}
+      .logo-summit{width:min(280px, 88vw);}
+      .logo-specialties{width:min(295px, 92vw);}
+      .flight-top h2{font-size:18px;}
+      .flight-card{grid-template-columns:68px minmax(0,1fr);gap:8px;padding:9px;}
+      .flight-chip{width:68px;font-size:17px;padding:16px 2px;}
+      .flight-airline{font-size:14px;}
+      .back-button{padding:10px 11px;font-size:14px;}
+      .detail-meta,.participant-list li{font-size:13px;}
+    }
+
+    /* Ajustes finales: desplazamiento natural de toda la página */
+    .flight-panel {
+      max-height: none;
+      height: auto;
+      overflow: visible;
+    }
+    #flight-body {
+      overflow: visible;
+      height: auto;
+      max-height: none;
+    }
+    .participants-wrap {
+      max-height: none;
+      overflow: visible;
+    }
+
+    /* Separación visual del logotipo Armstrong */
+    .page.panel-open .layout { 
+      grid-template-rows: auto auto auto;
+      align-content: start;
+      gap: 0;
+    }
+    .page.panel-open .top { padding-top: 8px; }
+    .page.panel-open .middle {
+      margin-top: 38px;
+      padding-bottom: 24px;
+    }
+    .page.panel-open .bottom {
+      margin-top: 24px;
+      padding-bottom: 30px;
+    }
+
+    /* Tarjetas de escritorio más compactas */
+    @media (min-width: 641px) {
+      .flight-panel { width: min(100%, 820px); }
+      .flight-grid { gap: 10px; }
+      .flight-card {
+        grid-template-columns: 82px minmax(0, 1fr);
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 14px;
+        border-width: 1.5px;
+      }
+      .flight-chip {
+        min-width: 0;
+        width: 82px;
+        padding: 15px 6px;
+        border-radius: 11px;
+        font-size: 24px;
+      }
+      .flight-meta { gap: 3px; }
+      .flight-date { font-size: 12px; }
+      .flight-airline { font-size: clamp(16px, 1.45vw, 20px); }
+      .flight-sub { font-size: 12px; }
+      .flight-top { padding: 14px 16px 10px; }
+      #flight-body { padding: 12px 16px 16px; }
+    }
+
+    @media (max-width: 640px) {
+      .page.panel-open .middle { margin-top: 28px; }
+      .page.panel-open .bottom { margin-top: 20px; padding-bottom: 22px; }
+      .flight-panel { max-height: none; overflow: visible; }
+      #flight-body { overflow: visible; max-height: none; }
+      .participants-wrap { max-height: none; overflow: visible; }
+    }
+
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="layout">
+      <header class="top">
+        <img class="logo-armstrong" src="logo_armstrong.png" alt="Armstrong">
+      </header>
+      <section class="middle">
+        <img class="farma-title" src="farma.png" alt="2° Summit Farma B">
+        <div class="button-area" aria-label="Documentos del evento">
+          <div id="home-buttons" class="button-area">
+            <div class="row"><button class="btn btn-11" type="button" data-section="llegadas">Llegadas</button><a class="btn btn-general" href="agenda.pdf" target="_blank" rel="noopener">Agenda General</a></div>
+            <div class="row"><a class="btn btn-12" href="agenda-12-octubre.pdf" target="_blank" rel="noopener">12 Octubre:<br>Día del evento</a><a class="btn btn-13" href="tour.pdf" target="_blank" rel="noopener">13 Octubre:<br>Excursión</a><button class="btn btn-salidas" type="button" data-section="salidas">Salidas</button></div>
+          </div>
+          <section id="flight-panel" class="flight-panel hidden" aria-live="polite">
+            <div class="flight-top">
+              <h2 id="flight-heading"></h2>
+              <button id="flight-back" class="back-button" type="button">← Regresar</button>
+            </div>
+            <div id="flight-body"></div>
+          </section>
+        </div>
+      </section>
+      <footer class="bottom">
+        <img class="logo-summit" src="letras_summit.png" alt="Summit Especialidades">
+        <img class="logo-specialties" src="logos_especialidades.png" alt="Especialidades del summit">
+      </footer>
+    </section>
+  </main>
+  <script>
+    const FLIGHTS = {"llegadas": [{"name": "Barajas Gonzalez Francisco Javier", "airline": "Aeroméxico", "flight": "656", "date": "10/10/26", "time": "22:00"}, {"name": "Barba Martínez Hector", "airline": "Aeroméxico", "flight": "656", "date": "10/10/26", "time": "22:00"}, {"name": "Perez Mendez Jose Roberto", "airline": "Aeroméxico", "flight": "656", "date": "10/10/26", "time": "22:00"}, {"name": "Aguirre Alatorre Liliana", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Amabile Cuevas Carlos Fidel", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Amador Garcia Ruben", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Banuelos Altarmirano Jose Miguel", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Bartolo Rangel Mariana Ivette", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Campechano Jarquin Marcial", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Castellanos Gonzalez Abril", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Castillo Del Rio Rosario Marieta", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Duarte Vega Manuel", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Flores Moreno Ramiro", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Garcia Rico Alma Rosa", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Gonzalez Penilla Valeria", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Gonzalez Reyna Julio Cesar", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Guerrero Herrera Luis Fernando", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Jimenez Cortes Hazael", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Lopez Arballo Gabriela", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Lucas Jimenez Juan Jesus", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Luque Ceppi Pamela Nanina", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Marin Poo Balbina", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Mariscal Rubio Maria Elena", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Martinez Martinez Angel Arturo", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Medina Medina Orlando", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Monroy Roldan Michel Amaury", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Murra Saca Guadalupe Beatriz", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Ortiz Gutierrez Edgar Rosenberg", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Perfecto Arroyo Miguel Arnulfo", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Ramirez Barreto Francisco Javier", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Rosas De Alba Cesar Daniel", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Sarmiento Blanco Gustavo", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Torres Y Gutierrez Rubio Arturo", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Uscanga Perezcano Raul", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Vidales Hernandez Miroslava Senet", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Villegas Canales Olga Lidia", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Yanez Perez Illiana Denisse", "airline": "Aeroméxico", "flight": "690", "date": "11/10/26", "time": "12:05"}, {"name": "Aguilar Sanchez Eduardo", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Anul Sosa Dalia Maria", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Axotla Escalona Rafael De Jesus", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Bahena Martinez Jose Luis", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Barrientos Vargas German", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Chavira Estanol Araceli", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Chinchilla Hernandez Rafael Alberto De Jesus", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Consuelo Carcamo Alma Gabriela", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Espinosa Berrones Amparo Esmanyul", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Fuentes Mendoza Maria Luisa", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Garcia Zamora Ana Karen", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Gonzalez Robledo Kevin Eduardo", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Hernandez Sanchez Ruth", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Hernandez Toledo Ruben", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Martinez Dominguez Jose Maria", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Martinez Rodriguez Marino", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Miranda Moreno Mauricio", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Montero Hernandez Ulises", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Navarrete Morales Natalia", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Navarro Vazquez Ricardo", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Nunez Gonzalez Gabriela", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Paredes Aragon Elma Marieliz", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Penate Marrero Juan Carlos", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Quezada Hernandez Antonio Alfredo", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Ramos Garibay Rodrigo", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Rosas Balan Alejandro", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Said Adame Mariana", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Serrano Gonzalez Alberto", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Ubaldo Nicolas Jorge", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Yemha Moreno Carlos Haidar", "airline": "Avianca", "flight": "633", "date": "11/10/26", "time": "15:55"}, {"name": "Ruiz Garcia Ramiro Gilberto", "airline": "American Airlines", "flight": "2643", "date": "11/10/26", "time": "20:21"}, {"name": "Grajeda Gallardo Luis Carlos", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Vazquez Aguilera Francisco Alejandro", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Sousa Hernandez Lucia Eugenia", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Colchado Garza Lizette Mayela", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Ruiz Canaan Maria Soledad", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Barba Martinez Hector", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Fernandez Huerta Veronica", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Galindo Lopez Judith", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Gomez Bocanegra Maria Victoria", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Hernandez Ramirez Maria Luisa", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Hirales Marquez Nadia Lizeth", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Llamas Rangel Martha Hayde", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Avila Cuevas Evaristo", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Barajas Gonzalez Francisco Javier", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Benitez Cruz Damian Enrique", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Herrera Tinajero Oralia Catalina", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Sitten Ayala Martin Alberto", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Beltran Lopez Perla Isabel", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Garcia Hernandez Juan Jose Andres", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Gomez Garcia Angelica", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Madinabeitia Martinez Sergio Jesus", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Perez Mendez Jose Roberto", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Apodaca Duran Carlos Enrique", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Tejeda Lopez Rigoberto", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Vargas Mendez Ruben Dario", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Vazquez Herrejon Gilberto", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Centeno Lopez Martha Patricia", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Bernal Gamboa Gabriel", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Ramos Penafiel Christian Omar", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Cortes Perez Daniela", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "De La Llave Montes Francisco", "airline": "Aeroméxico", "flight": "656", "date": "11/10/26", "time": "22:00"}, {"name": "Hernandez Marin Daniela Samantha", "airline": "Avianca", "flight": "651", "date": "11/10/26", "time": "23:15"}, {"name": "Perez Veitia Jose Felix", "airline": "Avianca", "flight": "651", "date": "11/10/26", "time": "23:15"}], "salidas": [{"name": "Amabile Cuevas Carlos Fidel", "airline": "Aeroméxico", "flight": "691", "date": "12/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Ramos Peñafiel Christian Omar", "airline": "Aeroméxico", "flight": "657", "date": "13/10/26", "time": "07:30", "hotel": "04:30"}, {"name": "Duarte Vega Manuel", "airline": "Aeroméxico", "flight": "691", "date": "13/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Hernandez Marin Daniela Samantha", "airline": "Avianca", "flight": "650", "date": "14/10/26", "time": "05:45", "hotel": "03:00"}, {"name": "Perez Veitia Jose Felix", "airline": "Avianca", "flight": "650", "date": "14/10/26", "time": "05:45", "hotel": "03:00"}, {"name": "Vazquez Aguilera Francisco Alejandro", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Serrano Gonzalez Alberto", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Anul Sosa Dalia Maria", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Hernandez Toledo Ruben", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Barrientos Vargas German", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Chavira Estanol Araceli", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Fuentes Mendoza Maria Luisa", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Navarrete Morales Natalia", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Bahena Martinez Jose Luis", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Chinchilla Hernandez Rafael Alberto De Jesus", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Espinosa Berrones Amparo Esmanyul", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Gonzalez Robledo Kevin Eduardo", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Quezada Hernandezvantonio Alfredo", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Martinez Rodriguez Marino", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Miranda Moreno Mauricio", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Montero Hernandez Ulises", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Penate Marrero Juan Carlos", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Said Adame Mariana", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Yemha Moreno Carlos Haidar", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Nunez Gonzalez Gabriela", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Axotla Escalona Rafael De Jesus", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Ramos Garibay Rodrigo", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Garcia Zamora Ana Karen", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Ramirez Barreto Francisco Javier", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Hernandez Sanchez Ruth", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Rosas Balan Alejandro", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Banuelos Altarmirano Jose Miguel", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Garcia Rico Alma Rosa", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Navarro Vazquez Ricardo", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Aguilar Sanchez Eduardo", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Yanez Perez Illiana Denisse", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Ubaldo Nicolas Jorge", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Castillo Del Rio Rosario Marieta", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Torres Y Gutierrez Rubio Arturo", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Bartolo Rangel Mariana Ivette", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Martinez Dominguez Jose Maria", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Cortes Perez Daniela", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "De La Llave Montes Francisco", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Paredes Aragon Elma Marieliz", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Ruiz Garcia Ramiro Gilberto", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Consuelo Carcamo Alma Gabriela", "airline": "Avianca", "flight": "632", "date": "14/10/26", "time": "12:25", "hotel": "09:00"}, {"name": "Villegas Canales Olga Lidia", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Sousa Hernandez Lucia Eugenia", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Colchado Garza Lizette Mayela", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Ruiz Canaan Maria Soledad", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Aguirre Alatorre Liliana", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Amador Garcia Ruben", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Barba Martinez Hector", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Fernandez Huerta Veronica", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Galindo Lopez Judith", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Gomez Bocanegra Maria Victoria", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Hernandez Ramirez Maria Luisa", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Hirales Marquez Nadia Lizeth", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Llamas Rangel Martha Hayde", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Luque Ceppi Pamela Nanina", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Mariscal Rubio Maria Elena", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Murra Saca Guadalupe Beatriz", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Vidales Hernandez Miroslava Senet", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Avila Cuevas Evaristo", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Barajas Gonzalez Francisco Javier", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Benitez Cruz Damian Enrique", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Flores Moreno Ramiro", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Herrera Tinajero Oralia Catalina", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Sitten Ayala Martin Alberto", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Uscanga Perezcano Raul", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Beltran Lopez Perla Isabel", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Garcia Hernandez Juan Jose Andres", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Gomez Garcia Angelica", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Gonzalez Reyna Julio Cesar", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Guerrero Herrera Luis Fernando", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Lopez Arballo Gabriela", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Madinabeitia Martinez Sergio Jesus", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Martinez Martinez Angel Arturo", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Medina Medina Orlando", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Perez Mendez Jose Roberto", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Perfecto Arroyo Miguel Arnulfo", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Rosas De Alba Cesar Daniel", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Apodaca Duran Carlos Enrique", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Tejeda Lopez Rigoberto", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Vargas Mendez Ruben Dario", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Vazquez Herrejon Gilberto", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Castellanos Gonzalez Abril", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Centeno Lopez Martha Patricia", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Sarmiento Blanco Gustavo", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Monroy Roldan Michel Amaury", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Bernal Gamboa Gabriel", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Jimenez Cortes Hazael", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Lucas Jimenez Juan Jesus", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Campechano Jarquin Marcial", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Ortiz Gutierrez Edgar Rosenberg", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}, {"name": "Marin Poo Balbina", "airline": "Aeroméxico", "flight": "691", "date": "14/10/26", "time": "13:25", "hotel": "10:00"}]};
+    (()=>{
+      const page = document.querySelector('.page');
+      const title = document.querySelector('.farma-title');
+      const home = document.querySelector('#home-buttons');
+      const panel = document.querySelector('#flight-panel');
+      const body = document.querySelector('#flight-body');
+      const heading = document.querySelector('#flight-heading');
+      let mode = null;
+      let currentGroups = [];
+
+      const tones = ['tone-1','tone-2','tone-3','tone-4','tone-5','tone-6'];
+      const escape = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const readable = s => {
+        const [d,m,y] = s.split('/');
+        const year = y && y.length === 2 ? `20${y}` : y;
+        return `${Number(d)} de octubre de ${year||'2026'}`;
+      };
+      const readableShort = s => {
+        const [d] = s.split('/');
+        return `${Number(d)} de octubre`;
+      };
+      const groups = (section) => {
+        const map = new Map();
+        for (const p of FLIGHTS[section]) {
+          const k = [p.date,p.airline,p.flight,p.time,p.hotel || ''].join('|');
+          if (!map.has(k)) map.set(k, {...p, people:[]});
+          map.get(k).people.push(p.name);
+        }
+        return [...map.values()].sort((a,b)=>{
+          const date = s => s.date.split('/').reverse().join('');
+          return date(a).localeCompare(date(b)) || a.time.localeCompare(b.time) || a.airline.localeCompare(b.airline);
+        });
+      };
+
+      function showHome(){
+        mode = null;
+        home.classList.remove('hidden');
+        panel.classList.add('hidden');
+        title.classList.remove('hidden');
+        page.classList.remove('panel-open');
+      }
+
+      function openSection(section){
+        mode = section;
+        currentGroups = groups(section);
+        home.classList.add('hidden');
+        panel.classList.remove('hidden');
+        title.classList.add('hidden');
+        page.classList.add('panel-open');
+        heading.textContent = section === 'llegadas' ? 'Llegadas' : 'Salidas';
+        body.innerHTML = `
+          <p class="flight-note">Seleccione su bloque de ${section === 'llegadas' ? 'llegada' : 'salida'} según la fecha, aerolínea y vuelo.</p>
+          <div class="flight-grid">${currentGroups.map((g,i)=>{
+            const tone = tones[i % tones.length];
+            const hotel = section === 'salidas' ? `<span class="flight-sub">Salida del hotel: ${escape(g.hotel)} h</span>` : '';
+            return `
+              <button class="flight-card ${tone}" data-group="${i}" type="button">
+                <span class="flight-chip">${escape(g.time)}</span>
+                <span class="flight-meta">
+                  <span class="flight-date">${readableShort(g.date)} · ${escape(g.time)} h (hora de vuelo)</span>
+                  <span class="flight-airline">${escape(g.airline)} · ${escape(g.flight)}</span>
+                  <span class="flight-sub">${g.people.length} participante${g.people.length===1 ? '' : 's'} · Bloque ${i+1}</span>
+                  ${hotel}
+                </span>
+              </button>`;
+          }).join('')}</div>`;
+        body.scrollTop = 0;
+        body.querySelectorAll('[data-group]').forEach(btn => btn.addEventListener('click', () => openGroup(section, currentGroups[Number(btn.dataset.group)], Number(btn.dataset.group) + 1)));
+      }
+
+      function openGroup(section, g, n){
+        heading.textContent = `${section === 'llegadas' ? 'Llegadas' : 'Salidas'} · Bloque ${n}`;
+        body.innerHTML = `
+          <div class="flight-detail">
+            <div class="detail-head">
+              <h3>${escape(g.airline)} · Vuelo ${escape(g.flight)}</h3>
+              <div class="detail-meta">Fecha: <strong>${readable(g.date)}</strong></div>
+              <div class="detail-meta">${section === 'llegadas' ? 'Hora de llegada del vuelo' : 'Horario del vuelo'}: <strong>${escape(g.time)} h</strong></div>
+            </div>
+            ${section === 'salidas' ? `<div class="hotel-time">Salida desde el hotel hacia el aeropuerto: ${escape(g.hotel)} h</div>` : ''}
+            <div class="participants-wrap">
+              <h4>Participantes (${g.people.length})</h4>
+              <ol class="participant-list">${g.people.map(name => `<li>${escape(name)}</li>`).join('')}</ol>
+            </div>
+          </div>`;
+        body.scrollTop = 0;
+      }
+
+      document.querySelectorAll('[data-section]').forEach(btn => btn.addEventListener('click', () => openSection(btn.dataset.section)));
+      document.querySelector('#flight-back').addEventListener('click', () => {
+        if (mode && heading.textContent.includes('Bloque')) openSection(mode);
+        else showHome();
+      });
+    })();
+  </script>
+</body>
+</html>
