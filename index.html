@@ -279,6 +279,19 @@
       .participants-wrap { max-height: none; overflow: visible; }
     }
 
+
+    /* Separación de los logotipos respecto de los botones en la portada. */
+    .page:not(.panel-open) .bottom {
+      transform: none;
+      margin-top: 80px;
+    }
+    @media (max-width: 640px) {
+      .page:not(.panel-open) .bottom {
+        transform: none;
+        margin-top: 55px;
+        padding-bottom: 20px;
+      }
+    }
   </style>
 </head>
 <body>
