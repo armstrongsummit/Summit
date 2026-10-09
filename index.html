@@ -63,6 +63,15 @@
     .btn-12{border:1.6px solid var(--blue);background:linear-gradient(180deg, var(--blue-soft), rgba(15,21,31,.20));box-shadow:0 0 0 1px rgba(0,185,255,.12) inset, 0 0 20px var(--blue-glow);}
     .btn-13{border:1.6px solid var(--pink);background:linear-gradient(180deg, var(--pink-soft), rgba(15,21,31,.20));box-shadow:0 0 0 1px rgba(213,0,127,.12) inset, 0 0 20px var(--pink-glow);}
     .btn-salidas{border:1.6px solid #e88fab;background:linear-gradient(180deg,rgba(232,90,139,.24),rgba(15,21,31,.2));box-shadow:0 0 20px rgba(232,90,139,.2)}
+    .btn-fotos{position:relative;min-width:340px;min-height:86px;padding:0;border:1.8px solid #b571ff;background:linear-gradient(135deg,rgba(95,24,159,.82),rgba(13,24,42,.88) 52%, rgba(0,166,255,.30));box-shadow:0 0 30px rgba(181,113,255,.28), inset 0 0 0 1px rgba(255,255,255,.06);overflow:hidden}
+    .btn-fotos::before{content:"";position:absolute;inset:-35% auto auto -10%;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle, rgba(255,255,255,.30), rgba(255,255,255,0));pointer-events:none}
+    .btn-fotos::after{content:"";position:absolute;inset:auto -30px -35px auto;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle, rgba(0,212,255,.28), rgba(0,212,255,0));pointer-events:none}
+    .btn-fotos .gallery-inner{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:14px;padding:16px 22px;width:100%}
+    .btn-fotos .gallery-icon{font-size:28px;line-height:1;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35))}
+    .btn-fotos .gallery-copy{display:flex;flex-direction:column;align-items:flex-start;text-align:left;line-height:1.05}
+    .btn-fotos .gallery-copy strong{font-size:20px;letter-spacing:.2px}
+    .btn-fotos .gallery-copy span{font-size:12px;font-weight:700;opacity:.88;letter-spacing:.6px;text-transform:uppercase}
+    .btn-fotos:hover{transform:translateY(-3px) scale(1.01);box-shadow:0 0 36px rgba(181,113,255,.34), 0 14px 34px rgba(0,0,0,.24)}
     .hidden{display:none!important;}
 
     .flight-panel{
@@ -170,6 +179,10 @@
     }
     @media (max-width: 640px){
       .page{padding-left:12px;padding-right:12px;}
+      .btn-fotos{width:min(100%, 330px);min-width:0;min-height:82px;}
+      .btn-fotos .gallery-inner{padding:14px 18px;gap:12px;}
+      .btn-fotos .gallery-copy strong{font-size:18px;}
+      .btn-fotos .gallery-copy span{font-size:11px;}
       .top{padding-top:4px;}
       .logo-armstrong{width:min(248px, 66vw);}
       .middle{gap:22px;padding:10px 0 18px;transform:translateY(-52px);}
@@ -306,6 +319,7 @@
           <div id="home-buttons" class="button-area">
             <div class="row"><button class="btn btn-11" type="button" data-section="llegadas">Llegadas</button><a class="btn btn-general" href="agenda.pdf" target="_blank" rel="noopener">Agenda General</a></div>
             <div class="row"><a class="btn btn-12" href="agenda-12-octubre.pdf" target="_blank" rel="noopener">12 Octubre:<br>Día del evento</a><a class="btn btn-13" href="tour.pdf" target="_blank" rel="noopener">13 Octubre:<br>Excursión</a><button class="btn btn-salidas" type="button" data-section="salidas">Salidas</button></div>
+            <div class="row"><a class="btn btn-fotos" href="galeria.html"><span class="gallery-inner"><span class="gallery-icon">📸</span><span class="gallery-copy"><strong>Galería de fotos</strong><span>Sube y comparte tus momentos</span></span></span></a></div>
           </div>
           <section id="flight-panel" class="flight-panel hidden" aria-live="polite">
             <div class="flight-top">
