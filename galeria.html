@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090d18">
+<title>Galería del Summit</title>
+<style>
+:root{--bg:#081120;--panel:rgba(7,16,33,.88);--panel-2:rgba(11,23,45,.92);--line:rgba(255,255,255,.13);--cyan:#3fe0ff;--violet:#af64ff;--pink:#ff4fc7;--gold:#ffd24a;--text:#f6fbff;--muted:#bfd0e5}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--text)}body{background:linear-gradient(rgba(4,9,18,.24),rgba(4,9,18,.72)), url('bg.jpg') center/cover fixed no-repeat;overflow-x:hidden}
+a{color:inherit}main{width:min(1180px,calc(100% - 28px));margin:0 auto;padding:26px 0 34px}.header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}.back{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:15px;text-decoration:none;background:rgba(10,29,49,.75);border:1px solid #52d6f6;box-shadow:0 0 0 1px rgba(255,255,255,.04) inset,0 10px 24px rgba(0,0,0,.18);font-weight:700}.brand{max-width:250px;width:min(42vw,250px);filter:drop-shadow(0 10px 18px rgba(0,0,0,.25))}.hero{position:relative;overflow:hidden;padding:30px 28px;border-radius:28px;background:linear-gradient(135deg, rgba(111,35,185,.45), rgba(5,17,37,.88) 46%, rgba(8,105,154,.35));border:1px solid rgba(255,255,255,.14);box-shadow:0 20px 60px rgba(0,0,0,.28);margin-bottom:22px}.hero:before{content:"";position:absolute;inset:-90px auto auto -70px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle, rgba(255,255,255,.22), rgba(255,255,255,0));pointer-events:none}.hero:after{content:"";position:absolute;inset:auto -70px -100px auto;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle, rgba(63,224,255,.22), rgba(63,224,255,0));pointer-events:none}.pill{position:relative;z-index:1;display:inline-block;margin-bottom:10px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);font-size:12px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}.hero h1{position:relative;z-index:1;margin:0 0 10px;font-size:clamp(34px,6vw,64px);line-height:.96}.hero p{position:relative;z-index:1;margin:0;max-width:760px;font-size:clamp(15px,2.2vw,22px);color:#e2edf7}
+.grid{display:grid;grid-template-columns:1.08fr .92fr;gap:18px;align-items:start}.panel{background:linear-gradient(180deg, var(--panel), var(--panel-2));border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 14px 44px rgba(0,0,0,.24)}.panel h2{margin:0 0 14px;font-size:32px;line-height:1}.title-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.badge{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:8px 13px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);font-size:12px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:#d8e7f8}.upload-lead{font-size:16px;color:#e9f2fc;margin:4px 0 16px}.drop{position:relative;display:block;cursor:pointer;border:2px dashed rgba(63,224,255,.85);border-radius:24px;padding:28px 18px;text-align:center;background:linear-gradient(135deg, rgba(4,34,55,.74), rgba(84,23,131,.34));transition:.2s;box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}.drop.drag,.drop:hover{transform:translateY(-1px);background:linear-gradient(135deg, rgba(6,45,72,.84), rgba(100,28,155,.42))}.drop strong{display:block;font-size:28px;line-height:1.05;margin-bottom:10px}.drop span{display:block;color:#d2e2f1}.drop input{position:absolute;left:-9999px}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.button{border:0;border-radius:14px;padding:13px 18px;background:linear-gradient(135deg,var(--violet),var(--pink));color:#fff;font-weight:800;cursor:pointer;box-shadow:0 10px 28px rgba(175,100,255,.25)}.button.secondary{background:#163349;border:1px solid #3faad0;box-shadow:none}.button.ghost{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);box-shadow:none}.button:disabled{opacity:.45;cursor:not-allowed}.summary{margin-top:12px;min-height:22px;color:#d7e8f8;font-size:14px}.status{margin-top:12px;min-height:26px;color:#c7f4fb;font-size:14px}.preview-grid,.photo-grid{display:grid;gap:10px}.preview-grid{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:16px}.preview{border-radius:15px;padding:6px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}.preview img,.photo-card img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:10px;display:block;background:#0d2031}.preview small{display:block;margin-top:6px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#dbe7f3}.gallery-panel{position:relative;overflow:hidden}.gallery-panel:before{content:"";position:absolute;inset:auto auto -70px -55px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle, rgba(255,210,74,.12), rgba(255,210,74,0));pointer-events:none}.gallery-head p{margin:6px 0 0;color:#d8e6f5;font-size:16px}.gallery-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:14px 0 16px}.tiny{font-size:13px;color:#bfd0e5}.photo-grid{grid-template-columns:repeat(3,minmax(0,1fr));min-height:160px}.photo-card{border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:6px;background:rgba(255,255,255,.04)}.photo-card a{display:block}.meta{font-size:11px;color:#b8ccdd;padding:6px}.empty-state{display:flex;align-items:center;justify-content:center;text-align:center;border-radius:18px;border:1px dashed rgba(255,255,255,.14);padding:32px 18px;color:#d0deec;background:rgba(255,255,255,.03)}.footer{text-align:center;margin-top:28px}.footer img{max-width:310px;width:min(75vw,310px);filter:drop-shadow(0 10px 18px rgba(0,0,0,.24))}button:focus-visible,a:focus-visible,.drop:focus-within{outline:3px solid white;outline-offset:3px}
+@media(max-width:930px){main{width:min(100% - 20px,1180px)}.grid{grid-template-columns:1fr}.photo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){main{width:calc(100% - 14px);padding:16px 0 24px}.header{margin-bottom:14px}.back{padding:10px 12px;font-size:14px}.brand{width:min(46vw,200px)}.hero{padding:22px 16px;border-radius:22px}.panel{padding:16px;border-radius:20px}.panel h2{font-size:26px}.upload-lead,.gallery-head p{font-size:15px}.drop{padding:22px 14px;border-radius:20px}.drop strong{font-size:24px}.preview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.photo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.footer img{width:min(82vw,280px)}}
+@media(max-width:400px){.hero h1{font-size:34px}.drop strong{font-size:21px}.photo-grid,.preview-grid{grid-template-columns:1fr 1fr}.button{width:100%;justify-content:center}}
+</style>
+</head>
+<body>
+<main>
+<header class="header">
+  <a class="back" href="index.html">← Volver a la agenda</a>
+  <img class="brand" src="logo_armstrong.png" alt="Armstrong">
+</header>
+<section class="hero">
+  <span class="pill">2° Summit Farma B</span>
+  <h1>Galería del Summit</h1>
+  <p>Sube tus fotografías y comparte los mejores momentos del evento en un solo lugar.</p>
+</section>
+<section class="grid">
+  <div class="panel upload-panel">
+    <div class="title-row">
+      <h2>Subir fotografías</h2>
+      <span class="badge">Comparte tus momentos</span>
+    </div>
+    <p class="upload-lead">Selecciona tus mejores fotos y súbelas al instante.</p>
+    <label id="drop" class="drop">
+      <strong>Seleccionar fotos</strong>
+      <span>O arrástralas aquí desde tu computadora</span>
+      <input type="file" id="files" accept="image/*" multiple>
+    </label>
+    <div class="summary" id="summary">Sin fotografías seleccionadas</div>
+    <div id="previews" class="preview-grid"></div>
+    <div class="actions">
+      <button id="upload" class="button" disabled>Subir fotografías</button>
+      <button id="clear" class="button secondary" type="button">Limpiar</button>
+    </div>
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+  </div>
+  <div class="panel gallery-panel">
+    <div class="gallery-head">
+      <div class="title-row">
+        <h2>Ver galería</h2>
+        <span class="badge">Momentos del Summit</span>
+      </div>
+      <p>Explora las fotografías compartidas por los asistentes.</p>
+    </div>
+    <div class="gallery-toolbar">
+      <div class="tiny" id="connection">Pendiente de conectar Supabase.</div>
+      <button class="button ghost" id="refresh" type="button">Actualizar galería</button>
+    </div>
+    <div id="gallery-preview" class="photo-grid"></div>
+  </div>
+</section>
+<footer class="footer"><img src="letras_summit.png" alt="Summit Especialidades"></footer>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id), config=window.SUMMIT_SUPABASE||{};
+const ready=Boolean(config.url&&config.publishableKey&&window.supabase);
+const api=ready?window.supabase.createClient(config.url,config.publishableKey):null;
+let user=null, selected=[];
+const MAX_SIDE=2000,MAX_FILES=12;
+const msg=text=>{$('status').textContent=text};
+const safeName=s=>String(s||'foto').replace(/[^a-zA-Z0-9._-]/g,'_').slice(0,80);
+function setEmpty(container,text){container.innerHTML=''; const d=document.createElement('div'); d.className='empty-state'; d.textContent=text; container.appendChild(d)}
+async function compress(file){
+ const bmp=await createImageBitmap(file,{imageOrientation:'from-image'});
+ const scale=Math.min(1,MAX_SIDE/Math.max(bmp.width,bmp.height));
+ const canvas=document.createElement('canvas'); canvas.width=Math.max(1,Math.round(bmp.width*scale)); canvas.height=Math.max(1,Math.round(bmp.height*scale));
+ const ctx=canvas.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.drawImage(bmp,0,0,canvas.width,canvas.height); bmp.close?.();
+ let quality=.88, blob=null;
+ do { blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',quality)); quality-=.08; } while(blob&&blob.size>2500000&&quality>=.5);
+ if(!blob||blob.size>3000000) throw new Error('No se pudo comprimir una imagen dentro del límite.');
+ return blob;
+}
+async function choose(files){
+ selected.forEach(p=>URL.revokeObjectURL(p.url)); selected=[]; $('previews').replaceChildren();
+ const arr=Array.from(files).filter(f=>f.type.startsWith('image/')).slice(0,MAX_FILES);
+ if(!arr.length){ msg(''); $('summary').textContent='Sin fotografías seleccionadas'; update(); return; }
+ msg('Preparando fotografías…');
+ for(const file of arr){
+   try{const blob=await compress(file); selected.push({file,blob,url:URL.createObjectURL(blob)});}catch(e){msg('No se pudo procesar '+file.name+': '+e.message)}
+ }
+ for(const p of selected){
+   const d=document.createElement('div'); d.className='preview';
+   const im=document.createElement('img'); im.src=p.url; im.alt='Vista previa';
+   const small=document.createElement('small'); small.textContent=safeName(p.file.name);
+   d.append(im,small); $('previews').append(d);
+ }
+ $('summary').textContent=selected.length+' foto(s) listas · '+(selected.reduce((s,p)=>s+p.blob.size,0)/1e6).toFixed(1)+' MB tras compresión';
+ msg(''); update();
+}
+function update(){$('upload').disabled=!ready||!selected.length||!user;}
+async function connect(){
+ if(!ready){ $('connection').textContent='Vista preliminar: configura supabase-config.js para activar cargas y galería.'; setEmpty($('gallery-preview'),'Aquí aparecerán las fotos del Summit.'); return; }
+ try{
+   const {data,error}=await api.auth.getSession(); if(error) throw error;
+   if(data?.session?.user){user=data.session.user}else{const a=await api.auth.signInAnonymously(); if(a.error) throw a.error; user=a.data.user;}
+   $('connection').textContent='Conectado. Las fotos se muestran en la galería al subirse.';
+   update(); await load();
+ }catch(e){$('connection').textContent='No se pudo conectar. Revisa la configuración.'; msg(e.message);}
+}
+async function signedImg(path){ const {data,error}=await api.storage.from('summit-fotos').createSignedUrl(path,3600); if(error) throw error; return data.signedUrl; }
+async function renderPhotos(rows,container){
+ container.innerHTML='';
+ if(!rows.length){ setEmpty(container,'Todavía no hay fotografías en la galería.'); return; }
+ for(const row of rows){
+   try{
+     const url=await signedImg(row.storage_path);
+     const card=document.createElement('div'); card.className='photo-card';
+     const link=document.createElement('a'); link.href=url; link.target='_blank'; link.rel='noopener';
+     const img=document.createElement('img'); img.loading='lazy'; img.src=url; img.alt='Fotografía del Summit';
+     link.append(img);
+     const info=document.createElement('div'); info.className='meta'; info.textContent=new Date(row.created_at).toLocaleDateString('es-MX');
+     card.append(link,info); container.append(card);
+   }catch(e){}
+ }
+}
+async function load(){
+ if(!api||!user) return;
+ const pub=await api.from('photos').select('id,storage_path,created_at').order('created_at',{ascending:false}).limit(120);
+ if(pub.error){ msg('No se pudo cargar la galería: '+pub.error.message); return; }
+ await renderPhotos(pub.data||[],$('gallery-preview'));
+}
+async function upload(){
+ if(!user||!selected.length) return;
+ $('upload').disabled=true; let done=0;
+ for(const p of selected){
+   const path=user.id+'/'+crypto.randomUUID()+'.jpg';
+   msg('Subiendo '+(done+1)+' de '+selected.length+'…');
+   const uploaded=await api.storage.from('summit-fotos').upload(path,p.blob,{contentType:'image/jpeg',upsert:false});
+   if(uploaded.error){ msg('Error al subir: '+uploaded.error.message); break; }
+   const inserted=await api.from('photos').insert({owner_id:user.id,storage_path:path,approved:true});
+   if(inserted.error){ await api.storage.from('summit-fotos').remove([path]); msg('Error al registrar la foto: '+inserted.error.message); break; }
+   done++;
+ }
+ if(done===selected.length){
+   msg('¡Listo! '+done+' fotografía(s) subida(s) a la galería.');
+   selected.forEach(p=>URL.revokeObjectURL(p.url)); selected=[]; $('previews').replaceChildren(); $('summary').textContent='Sin fotografías seleccionadas'; $('files').value='';
+ }
+ update(); await load();
+}
+$('files').addEventListener('change',e=>choose(e.target.files));
+$('upload').addEventListener('click',upload);
+$('clear').addEventListener('click',()=>{ $('files').value=''; choose([]); });
+$('refresh').addEventListener('click',load);
+const drop=$('drop');
+drop.addEventListener('dragover',e=>{e.preventDefault(); drop.classList.add('drag')});
+drop.addEventListener('dragleave',()=>drop.classList.remove('drag'));
+drop.addEventListener('drop',e=>{e.preventDefault(); drop.classList.remove('drag'); choose(e.dataTransfer.files)});
+connect();
+})();
+</script>
+</body>
+</html>
