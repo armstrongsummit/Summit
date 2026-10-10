@@ -1,15 +1,140 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Menú del Día</title>
-  <script>
-    // Fuerza a no usar caché agregando el timestamp
-    window.location.replace("menu.pdf?v=" + new Date().getTime());
-  </script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#111f29" />
+<title>Menú | 2° Summit Farma B</title>
+<style>
+:root { color-scheme: dark; --sky:#77dbe9; --lime:#b5d53d; --white:#f8f7f2; }
+* { box-sizing: border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; background:#111e29; color:var(--white); font-family:Arial,Helvetica,sans-serif; }
+body::before { content:""; position:fixed; inset:0; z-index:-2; background-image:linear-gradient(180deg,rgba(7,24,36,.68),rgba(8,23,31,.69)),url("bg.jpg"); background-size:cover; background-position:center center; background-repeat:no-repeat; }
+.page { min-height:100vh; display:flex; flex-direction:column; }
+.content { width:min(760px,calc(100% - 32px)); margin:0 auto; padding:34px 0 54px; text-align:center; }
+.back { color:#eaf6f4; display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(255,255,255,.42); border-radius:100px; padding:11px 16px; text-decoration:none; font-size:13px; font-weight:700; transition:.2s; }
+.back:hover,.back:focus-visible { background:rgba(255,255,255,.12); }
+.brand { margin:34px auto 5px; font-size:clamp(23px,5vw,36px); line-height:1; letter-spacing:-1.6px; font-weight:300; }
+.brand .a { display:inline-block; font-size:1.65em; line-height:.5; color:#238aca; font-weight:900; transform:translateY(3px); margin-right:2px; }
+.brand .r { font-size:50%; vertical-align:top; }
+.tag { margin:10px 0 35px; font-size:12px; font-style:italic; }
+.event { font-family:Impact,'Arial Narrow',Arial,sans-serif; letter-spacing:.14em; font-size:clamp(24px,5.8vw,48px); font-stretch:condensed; line-height:1.2; margin:0 0 34px; }
+.heading { border:2px solid var(--lime); border-radius:6px 52px 6px 52px; padding:19px; font-size:clamp(29px,5vw,46px); font-weight:300; letter-spacing:.06em; margin:0 0 28px; }
+.prompt { margin:0 0 16px; color:#d1eeed; font-size:15px; }
+.days { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:24px; }
+.day { border:1.5px solid #75d3df; background:rgba(9,35,49,.72); color:white; padding:15px 8px; border-radius:17px; cursor:pointer; font:700 clamp(13px,2.5vw,17px)/1.3 Arial,sans-serif; transition:transform .2s,background .2s,border-color .2s; }
+.day span { display:block; font-weight:400; font-size:12px; margin-top:3px; color:#c9e6e4; }
+.day:hover { transform:translateY(-2px); background:rgba(24,76,91,.9); }
+.day[aria-selected="true"] { color:#15242c; border-color:var(--lime); background:var(--lime); box-shadow:0 5px 26px rgba(156,221,40,.18); }
+.day[aria-selected="true"] span { color:#27341e; }
+.meals { display:flex; justify-content:center; gap:10px; margin:0 0 24px; }
+.meal { border:1px solid rgba(255,255,255,.45); border-radius:100px; background:transparent; padding:10px 22px; color:#eff; font-size:14px; font-weight:700; cursor:pointer; }
+.meal[aria-pressed="true"] { background:var(--sky); border-color:var(--sky); color:#082531; }
+.menu-card { padding:32px clamp(16px,5vw,45px) 42px; border:2px solid var(--sky); border-radius:8px 54px 8px 54px; background:linear-gradient(180deg,rgba(23,66,72,.62),rgba(15,30,42,.78)); box-shadow:0 18px 45px rgba(0,0,0,.13); min-height:440px; }
+.meal-title { text-transform:uppercase; font-size:clamp(26px,4vw,35px); letter-spacing:.09em; margin:0 0 32px; font-weight:600; }
+.course { margin:0 auto 27px; }
+.course:last-child { margin-bottom:0; }
+.course h3 { margin:0 0 8px; font-size:clamp(19px,3.4vw,26px); text-transform:uppercase; }
+.course p { margin:0; text-transform:uppercase; font-weight:300; font-size:clamp(15px,2.8vw,21px); line-height:1.5; letter-spacing:.035em; }
+.course p + p { margin-top:5px; }
+.footer { padding:28px 0 2px; color:#e3e4dd; font-size:13px; letter-spacing:.14em; }
+[hidden] { display:none !important; }
+@media(max-width:500px) { .content { width:calc(100% - 28px); padding-top:18px; } .brand { margin-top:27px; } .tag { margin-bottom:28px; } .event { margin-bottom:28px; } .heading { padding:15px; } .day { padding:13px 2px; border-radius:13px; } .menu-card { padding-top:26px; border-radius:6px 36px 6px 36px; min-height:410px; } .ornament { height:35px; } }
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; transition:none !important; } }
+
+/* Identidad gráfica y mejoras para celulares */
+.content { width:min(760px,calc(100% - 32px)); padding-top:clamp(24px,5vw,48px); }
+.brand-logos { display:flex; flex-direction:column; align-items:center; gap:22px; margin:0 auto 30px; }
+.brand-logos img,.logo-summit { display:block; object-fit:contain; max-width:100%; height:auto; }
+.logo-armstrong { width:min(290px,72vw); }
+.logo-farma { width:min(520px,91vw); }
+.logo-summit { width:min(335px,78vw); margin:34px auto 8px; }
+.venue-notice { margin:28px 0 12px; text-align:left; border:1px solid rgba(119,219,233,.64); border-left:4px solid var(--lime); border-radius:16px; padding:20px 23px; background:rgba(8,27,37,.88); box-shadow:0 10px 28px rgba(0,0,0,.16); }
+.venue-notice h2 { font-size:18px; margin:0 0 12px; letter-spacing:.025em; }
+.venue-notice p { font-size:14px; line-height:1.65; margin:0 0 10px; color:#f2f8f7; }
+.venue-notice p:last-child { margin-bottom:0; }
+@media(max-width:600px) {
+ body::before { background-position:57% center; }
+ .brand-logos { gap:18px; margin-bottom:24px; }
+ .logo-armstrong { width:min(230px,72vw); }
+ .logo-farma { width:min(340px,88vw); }
+ .venue-notice { padding:17px 16px; margin-top:22px; }
+ .venue-notice p { font-size:13.5px; }
+ .logo-summit { width:min(270px,76vw); }
+}
+</style>
 </head>
 <body>
-  <p>Cargando menú...</p>
+<div class="page">
+<div class="ornament" aria-hidden="true"></div>
+<main class="content">
+<a class="back" href="index.html" aria-label="Regresar al inicio">← Volver al inicio</a>
+<div class="brand-logos"><img class="logo-armstrong" src="logo_armstrong.png" alt="Armstrong"/><img class="logo-farma" src="farma.png" alt="2° Summit Farma B"/></div>
+<h2 class="heading">MENÚ</h2>
+<p class="prompt">Seleccione el día para consultar sus alimentos</p>
+<div class="days" role="tablist" aria-label="Días del menú">
+<button class="day" type="button" role="tab" id="tab11" aria-controls="menuContent" aria-selected="true" data-day="11">11 DE OCTUBRE<span>Domingo</span></button>
+<button class="day" type="button" role="tab" id="tab12" aria-controls="menuContent" aria-selected="false" data-day="12" tabindex="-1">12 DE OCTUBRE<span>Lunes</span></button>
+<button class="day" type="button" role="tab" id="tab13" aria-controls="menuContent" aria-selected="false" data-day="13" tabindex="-1">13 DE OCTUBRE<span>Martes</span></button>
+</div>
+<div class="meals" aria-label="Tipo de comida">
+<button class="meal" id="btn-almuerzo" type="button" data-meal="almuerzo" aria-pressed="true">Almuerzo</button>
+<button class="meal" id="btn-cena" type="button" data-meal="cena" aria-pressed="false">Cena</button>
+</div>
+<section class="menu-card" id="menuContent" role="tabpanel" aria-labelledby="tab11" aria-live="polite">
+<h2 class="meal-title" id="mealTitle">Almuerzo · 11 de octubre</h2>
+<div id="courses"></div>
+</section>
+<aside class="venue-notice" aria-label="Información importante sobre restaurantes">
+<h2>Información importante</h2>
+<p>Los alimentos indicados en este menú se servirán exclusivamente en el restaurante <strong>Ánfora</strong>.</p>
+<p>Si usted desea consumir alimentos o bebidas en <strong>Miyako</strong>, <strong>Rancho Grill</strong> o el bar <strong>El Bosque</strong>, tenga en cuenta que dichos consumos <strong>no están incluidos en el programa del evento y deberán ser cubiertos por su cuenta</strong>.</p>
+</aside>
+<img class="logo-summit" src="letras_summit.png" alt="Summit Especialidades" />
+</main>
+<div class="ornament bottom" aria-hidden="true"></div>
+</div>
+<script>
+const menus={
+  '11':{
+    almuerzo:[['Entrada',['Consomé de pollo']],['Proteínas',['Pollo relleno de queso y espinacas','Lomito a la bordelesa']],['Guarnición',['Vegetales de la huerta']],['Postre',['New York cheesecake']]],
+    cena:[['Entrada',['Ensalada César']],['Proteínas',['Lomo de cerdo en su jugo','Pescado romano']],['Guarnición',['Arroz con espárragos']],['Postre',['Brownie de macadamia']]]
+  },
+  '12':{
+    almuerzo:[['Entrada',['Ensalada de dúo de lechugas y vegetales grill']],['Proteínas',['Cordón bleu al vino tinto','Roast beef con infusión']],['Guarnición',['Arroz amarillo']],['Postre',['Pie de limón con salsa blueberry']]],
+    cena:[['Entrada',['Ensalada criolla']],['Proteínas',['Pollo a la española','Lomitos enteros argentinos']],['Guarnición',['Costra de papa']],['Postre',['Tiramisú artesanal']]]
+  },
+  '13':{
+    cena:[['Entrada',['Crema de zanahoria']],['Proteínas',['Medallones de Rossini','Pescado romano']],['Guarnición',['Tomate duquesa']],['Postre',['Parcela de flan']]]
+  }
+};
+let activeDay='11',activeMeal='almuerzo';
+const dayButtons=[...document.querySelectorAll('.day')];
+const mealButtons=[...document.querySelectorAll('.meal')];
+const courses=document.getElementById('courses');
+function render(){
+  if(!menus[activeDay][activeMeal]) activeMeal='cena';
+  dayButtons.forEach(b=>{const selected=b.dataset.day===activeDay;b.setAttribute('aria-selected',String(selected));b.tabIndex=selected?0:-1;});
+  mealButtons.forEach(b=>{b.hidden=!menus[activeDay][b.dataset.meal];b.setAttribute('aria-pressed',String(b.dataset.meal===activeMeal));});
+  document.getElementById('menuContent').setAttribute('aria-labelledby','tab'+activeDay);
+  const title=activeMeal==='almuerzo'?'Almuerzo':'Cena';
+  document.getElementById('mealTitle').textContent=`${title} · ${activeDay} de octubre`;
+  courses.replaceChildren();
+  for(const [name,items] of menus[activeDay][activeMeal]){
+    const section=document.createElement('section');section.className='course';
+    const heading=document.createElement('h3');heading.textContent=name;section.appendChild(heading);
+    items.forEach(item=>{const p=document.createElement('p');p.textContent=item;section.appendChild(p);});
+    courses.appendChild(section);
+  }
+}
+dayButtons.forEach((button,index)=>{
+ button.addEventListener('click',()=>{activeDay=button.dataset.day;activeMeal='almuerzo';render();});
+ button.addEventListener('keydown',event=>{if(!['ArrowRight','ArrowLeft','Home','End'].includes(event.key))return;event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?dayButtons.length-1:(index+(event.key==='ArrowRight'?1:-1)+dayButtons.length)%dayButtons.length;dayButtons[next].click();dayButtons[next].focus();});
+});
+mealButtons.forEach(button=>button.addEventListener('click',()=>{activeMeal=button.dataset.meal;render();}));
+const queryDay=new URLSearchParams(location.search).get('dia');if(menus[queryDay])activeDay=queryDay;
+render();
+</script>
 </body>
 </html>
