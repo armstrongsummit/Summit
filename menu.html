@@ -28,9 +28,11 @@ body::before { content:""; position:fixed; inset:0; z-index:-2; background-image
 .day:hover { transform:translateY(-2px); background:rgba(24,76,91,.9); }
 .day[aria-selected="true"] { color:#15242c; border-color:var(--lime); background:var(--lime); box-shadow:0 5px 26px rgba(156,221,40,.18); }
 .day[aria-selected="true"] span { color:#27341e; }
-.meals { display:flex; justify-content:center; gap:10px; margin:0 0 24px; }
+.meals { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin:0 0 24px; }
 .meal { border:1px solid rgba(255,255,255,.45); border-radius:100px; background:transparent; padding:10px 22px; color:#eff; font-size:14px; font-weight:700; cursor:pointer; }
 .meal[aria-pressed="true"] { background:var(--sky); border-color:var(--sky); color:#082531; }
+.breakfast-hours { display:table; margin:4px auto 34px; max-width:100%; padding:11px 15px; border:1px solid rgba(181,213,61,.78); border-radius:11px; background:rgba(181,213,61,.07); font-size:clamp(13px,3.2vw,16px); font-weight:700; line-height:1.4; }
+.breakfast-note { color:#d5e9e7; font-size:13px; line-height:1.5; margin: -16px 0 24px; }
 .menu-card { padding:32px clamp(16px,5vw,45px) 42px; border:2px solid var(--sky); border-radius:8px 54px 8px 54px; background:linear-gradient(180deg,rgba(23,66,72,.62),rgba(15,30,42,.78)); box-shadow:0 18px 45px rgba(0,0,0,.13); min-height:440px; }
 .meal-title { text-transform:uppercase; font-size:clamp(26px,4vw,35px); letter-spacing:.09em; margin:0 0 32px; font-weight:600; }
 .course { margin:0 auto 27px; }
@@ -62,6 +64,7 @@ body::before { content:""; position:fixed; inset:0; z-index:-2; background-image
  .venue-notice { padding:17px 16px; margin-top:22px; }
  .venue-notice p { font-size:13.5px; }
  .logo-summit { width:min(270px,76vw); }
+ .breakfast-hours { padding:10px 12px; margin-bottom:30px; font-size:13px; }
 }
 </style>
 </head>
@@ -79,11 +82,11 @@ body::before { content:""; position:fixed; inset:0; z-index:-2; background-image
 <button class="day" type="button" role="tab" id="tab13" aria-controls="menuContent" aria-selected="false" data-day="13" tabindex="-1">13 DE OCTUBRE<span>Martes</span></button>
 </div>
 <div class="meals" aria-label="Tipo de comida">
-<button class="meal" id="btn-almuerzo" type="button" data-meal="almuerzo" aria-pressed="true">Almuerzo</button>
+<button class="meal" id="btn-desayuno" type="button" data-meal="desayuno" aria-pressed="true">Desayuno</button>
 <button class="meal" id="btn-cena" type="button" data-meal="cena" aria-pressed="false">Cena</button>
 </div>
 <section class="menu-card" id="menuContent" role="tabpanel" aria-labelledby="tab11" aria-live="polite">
-<h2 class="meal-title" id="mealTitle">Almuerzo · 11 de octubre</h2>
+<h2 class="meal-title" id="mealTitle">Desayuno · 11 de octubre</h2>
 <div id="courses"></div>
 </section>
 <aside class="venue-notice" aria-label="Información importante sobre restaurantes">
@@ -98,29 +101,39 @@ body::before { content:""; position:fixed; inset:0; z-index:-2; background-image
 <script>
 const menus={
   '11':{
-    almuerzo:[['Entrada',['Consomé de pollo']],['Proteínas',['Pollo relleno de queso y espinacas','Lomito a la bordelesa']],['Guarnición',['Vegetales de la huerta']],['Postre',['New York cheesecake']]],
+    desayuno:[['Entrada',['Consomé de pollo']],['Proteínas',['Pollo relleno de queso y espinacas','Lomito a la bordelesa']],['Guarnición',['Vegetales de la huerta']],['Postre',['New York cheesecake']]],
     cena:[['Entrada',['Ensalada César']],['Proteínas',['Lomo de cerdo en su jugo','Pescado romano']],['Guarnición',['Arroz con espárragos']],['Postre',['Brownie de macadamia']]]
   },
   '12':{
-    almuerzo:[['Entrada',['Ensalada de dúo de lechugas y vegetales grill']],['Proteínas',['Cordón bleu al vino tinto','Roast beef con infusión']],['Guarnición',['Arroz amarillo']],['Postre',['Pie de limón con salsa blueberry']]],
+    desayuno:[['Entrada',['Ensalada de dúo de lechugas y vegetales grill']],['Proteínas',['Cordón bleu al vino tinto','Roast beef con infusión']],['Guarnición',['Arroz amarillo']],['Postre',['Pie de limón con salsa blueberry']]],
     cena:[['Entrada',['Ensalada criolla']],['Proteínas',['Pollo a la española','Lomitos enteros argentinos']],['Guarnición',['Costra de papa']],['Postre',['Tiramisú artesanal']]]
   },
   '13':{
     cena:[['Entrada',['Crema de zanahoria']],['Proteínas',['Medallones de Rossini','Pescado romano']],['Guarnición',['Tomate duquesa']],['Postre',['Parcela de flan']]]
   }
 };
-let activeDay='11',activeMeal='almuerzo';
+let activeDay='11',activeMeal='desayuno';
 const dayButtons=[...document.querySelectorAll('.day')];
 const mealButtons=[...document.querySelectorAll('.meal')];
 const courses=document.getElementById('courses');
 function render(){
-  if(!menus[activeDay][activeMeal]) activeMeal='cena';
   dayButtons.forEach(b=>{const selected=b.dataset.day===activeDay;b.setAttribute('aria-selected',String(selected));b.tabIndex=selected?0:-1;});
-  mealButtons.forEach(b=>{b.hidden=!menus[activeDay][b.dataset.meal];b.setAttribute('aria-pressed',String(b.dataset.meal===activeMeal));});
+  mealButtons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.meal===activeMeal)));
   document.getElementById('menuContent').setAttribute('aria-labelledby','tab'+activeDay);
-  const title=activeMeal==='almuerzo'?'Almuerzo':'Cena';
+  const title=activeMeal==='desayuno'?'Desayuno':'Cena';
   document.getElementById('mealTitle').textContent=`${title} · ${activeDay} de octubre`;
   courses.replaceChildren();
+  if(activeMeal==='desayuno'){
+    const hours=document.createElement('div');hours.className='breakfast-hours';
+    hours.textContent=activeDay==='13'?'Horario de desayuno: 6:00 a 7:45 a. m.':'Horario de desayuno: 6:00 a 8:00 a. m.';
+    courses.appendChild(hours);
+    if(activeDay==='13'){
+      const note=document.createElement('p');note.className='breakfast-note';
+      note.textContent='Horario especial por el día del tour.';
+      courses.appendChild(note);
+      return;
+    }
+  }
   for(const [name,items] of menus[activeDay][activeMeal]){
     const section=document.createElement('section');section.className='course';
     const heading=document.createElement('h3');heading.textContent=name;section.appendChild(heading);
@@ -129,7 +142,7 @@ function render(){
   }
 }
 dayButtons.forEach((button,index)=>{
- button.addEventListener('click',()=>{activeDay=button.dataset.day;activeMeal='almuerzo';render();});
+ button.addEventListener('click',()=>{activeDay=button.dataset.day;activeMeal='desayuno';render();});
  button.addEventListener('keydown',event=>{if(!['ArrowRight','ArrowLeft','Home','End'].includes(event.key))return;event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?dayButtons.length-1:(index+(event.key==='ArrowRight'?1:-1)+dayButtons.length)%dayButtons.length;dayButtons[next].click();dayButtons[next].focus();});
 });
 mealButtons.forEach(button=>button.addEventListener('click',()=>{activeMeal=button.dataset.meal;render();}));
