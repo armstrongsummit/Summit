@@ -31,7 +31,7 @@ body::before { content:""; position:fixed; inset:0; z-index:-2; background-image
 .meals { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin:0 0 24px; }
 .meal { border:1px solid rgba(255,255,255,.45); border-radius:100px; background:transparent; padding:10px 22px; color:#eff; font-size:14px; font-weight:700; cursor:pointer; }
 .meal[aria-pressed="true"] { background:var(--sky); border-color:var(--sky); color:#082531; }
-.breakfast-hours { display:table; margin:4px auto 34px; max-width:100%; padding:11px 15px; border:1px solid rgba(181,213,61,.78); border-radius:11px; background:rgba(181,213,61,.07); font-size:clamp(13px,3.2vw,16px); font-weight:700; line-height:1.4; }
+.breakfast-hours, .meal-hours { display:table; margin:4px auto 34px; max-width:100%; padding:11px 15px; border:1px solid rgba(181,213,61,.78); border-radius:11px; background:rgba(181,213,61,.07); font-size:clamp(13px,3.2vw,16px); font-weight:700; line-height:1.4; }
 .breakfast-note { color:#d5e9e7; font-size:13px; line-height:1.5; margin: -16px 0 24px; }
 .menu-card { padding:32px clamp(16px,5vw,45px) 42px; border:2px solid var(--sky); border-radius:8px 54px 8px 54px; background:linear-gradient(180deg,rgba(23,66,72,.62),rgba(15,30,42,.78)); box-shadow:0 18px 45px rgba(0,0,0,.13); min-height:440px; }
 .meal-title { text-transform:uppercase; font-size:clamp(26px,4vw,35px); letter-spacing:.09em; margin:0 0 32px; font-weight:600; }
@@ -64,8 +64,10 @@ body::before { content:""; position:fixed; inset:0; z-index:-2; background-image
  .venue-notice { padding:17px 16px; margin-top:22px; }
  .venue-notice p { font-size:13.5px; }
  .logo-summit { width:min(270px,76vw); }
- .breakfast-hours { padding:10px 12px; margin-bottom:30px; font-size:13px; }
+ .breakfast-hours, .meal-hours { padding:10px 12px; margin-bottom:30px; font-size:13px; }
 }
+/* Horarios por día y servicio: chips compactos con separación del primer platillo. */
+.meal-hours + .course { margin-top:6px; }
 /* Desayuno buffet: información concisa, sin espacio vacío excesivo. */
 .menu-card.is-breakfast, .menu-card.is-empty { min-height:0; padding-bottom:32px; }
 .menu-card.is-breakfast .meal-title, .menu-card.is-empty .meal-title { margin-bottom:22px; }
@@ -145,6 +147,11 @@ function render(){
   document.getElementById('mealTitle').textContent=`${labels[activeMeal]} · ${activeDay} de octubre`;
   courses.replaceChildren();
 
+  const horarios={
+    '11':{desayuno:'6:00 a 10:00 a. m.',comida:'12:00 p. m. a 3:00 p. m.',cena:'6:00 p. m. a 10:00 p. m.'},
+    '12':{desayuno:'6:00 a 8:00 a. m.',comida:'3:00 p. m. a 4:00 p. m.',cena:'6:00 p. m. a 10:00 p. m.'},
+    '13':{desayuno:'6:00 a 7:45 a. m.',cena:'6:00 p. m. a 10:00 p. m.'}
+  };
   if(activeMeal==='desayuno'){
     const heading=document.createElement('p');
     heading.className='buffet-label';
@@ -152,7 +159,7 @@ function render(){
     courses.appendChild(heading);
     const hours=document.createElement('div');
     hours.className='breakfast-hours';
-    hours.textContent=activeDay==='13'?'Horario: 6:00 a 7:45 a. m.':'Horario: 6:00 a 8:00 a. m.';
+    hours.textContent='Horario: '+horarios[activeDay].desayuno;
     courses.appendChild(hours);
     if(activeDay==='13'){
       const note=document.createElement('p');
@@ -171,6 +178,12 @@ function render(){
     courses.appendChild(note);
     return;
   }
+
+  // El horario se muestra encima de las entradas con suficiente separación visual.
+  const hours=document.createElement('div');
+  hours.className='meal-hours';
+  hours.textContent='Horario: '+horarios[activeDay][activeMeal];
+  courses.appendChild(hours);
 
   for(const [name,items] of selectedMenu){
     const section=document.createElement('section');
